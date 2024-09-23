@@ -1,0 +1,1 @@
+# plugins-gelato-integration-for-woocommerce
