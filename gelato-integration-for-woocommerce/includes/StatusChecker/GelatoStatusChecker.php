@@ -253,7 +253,7 @@ class GelatoStatusChecker
             }
         }
 
-        $ok = ($memoryLimit >= 128 * 1024 * 1024);
+        $ok = ($memoryLimit >= 128 * 1024 * 1024) || ini_get('memory_limit') == -1;
 
         if ($ok) {
             return self::STATUS_OK;

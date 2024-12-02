@@ -6,8 +6,8 @@ Author: Gelato
 Author URI: https://gelato.com/
 Contributors: Gelato AS
 Requires at least: 3.8
-Tested up to: 6.5
-Stable tag: 1.3.0
+Tested up to: 6.6.2
+Stable tag: 1.3.1
 Requires PHP: 7.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -58,6 +58,7 @@ Connecting Gelato with your WooCommerce store is easy:
 == Known Limitations ==
 
 1. Requires WooCommerce plugin 5.0.0 and up.
+2. Requires WooCommerce Legacy REST API plugin installed and activated.
 
 
 == Screenshots ==
@@ -97,3 +98,6 @@ Connecting Gelato with your WooCommerce store is easy:
 
 = 1.3.0 =
 * Add support for WordPress 6.4 and 6.5
+
+= 1.3.1 =
+* Improvements for php memory limit check
