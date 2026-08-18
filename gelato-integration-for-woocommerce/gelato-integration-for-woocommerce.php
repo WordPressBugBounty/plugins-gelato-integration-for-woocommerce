@@ -4,14 +4,14 @@
  * Plugin Name: Gelato Integration for WooCommerce
  * Plugin URI: https://
  * Description: This plugin helps to connect your WooCommerce store with Gelato .
- * Version: 1.3.1
+ * Version: 1.3.2
  * Author: Gelato
  * Author URI: https://gelato.com
  * License: GPLv2 or later
  * Text Domain: gelato-integration-for-woocommerce
  */
 
-define('GELATO_VERSION', '1.3.1');
+define('GELATO_VERSION', '1.3.2');
 define('GELATO_MINIMUM_WP_VERSION', '4.0');
 
 if (!defined('ABSPATH')) {
@@ -40,6 +40,7 @@ class GelatoPlugin
             return;
         }
 
+        require_once 'includes/GelatoConfig.php';
         require_once 'includes/GelatoMain.php';
         require_once 'includes/Pages/GelatoPageFactory.php';
         require_once 'includes/Pages/GelatoPage.php';

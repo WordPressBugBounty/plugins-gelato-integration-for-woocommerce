@@ -9,19 +9,19 @@ if (!defined('ABSPATH')) {
  */
 class GelatoStatusChecker
 {
-    public const STATUS_OK = 'OK';
-    public const STATUS_FAIL = 'FAIL';
-    public const STATUS_WARNING = 'WARNING';
-    public const STATUS_SKIPPED = 'SKIPPED';
+    const STATUS_OK = 'OK';
+    const STATUS_FAIL = 'FAIL';
+    const STATUS_WARNING = 'WARNING';
+    const STATUS_SKIPPED = 'SKIPPED';
 
-	public const TEST_SCOPE_FULL = 'FULL';
-	public const TEST_SCOPE_CONNECTION = 'CONNECTION';
+	const TEST_SCOPE_FULL = 'FULL';
+	const TEST_SCOPE_CONNECTION = 'CONNECTION';
 
     public function getTestList() {
         return [
 	        'test_permalinks' => [
-		        'name'        => __('WordPress Permalinks', 'gelato-integration-for-woocommerce'),
-		        'description' => __('Make sure that permalinks are NOT set to “plain” under Settings > Permalinks. Select any setting other than “Plain”.', 'gelato-integration-for-woocommerce'),
+		        'name'        => __('WordPress Permalinks', GelatoConfig::TEXT_DOMAIN),
+		        'description' => __('Make sure that permalinks are NOT set to "plain" under Settings > Permalinks. Select any setting other than "Plain".', GelatoConfig::TEXT_DOMAIN),
 		        'method'      => 'test_permalinks',
 		        'help'        => [
 			        'link' => 'https://apisupport.gelato.com/hc/en-us/articles/360020186039-Getting-Started-with-WooCommerce',
@@ -29,8 +29,8 @@ class GelatoStatusChecker
 		        ]
 	        ],
 	        'test_gelato_webhooks' => [
-		        'name'        => __('WooCommerce Webhooks', 'gelato-integration-for-woocommerce'),
-		        'description' => __('Gelato requires webhooks to be setup in WooCommerce to update store, products and orders.', 'gelato-integration-for-woocommerce'),
+		        'name'        => __('WooCommerce Webhooks', GelatoConfig::TEXT_DOMAIN),
+		        'description' => __('Gelato requires webhooks to be setup in WooCommerce to update store, products and orders.', GelatoConfig::TEXT_DOMAIN),
 		        'method'      => 'test_gelato_webhooks',
 		        'help'        => [
 			        'link' => 'https://apisupport.gelato.com/hc/en-us/articles/4408190821138-Gelato-Woocommerce-app-health-status-check-and-webhooks',
@@ -38,38 +38,38 @@ class GelatoStatusChecker
 		        ]
 	        ],
 	        'test_wc_api_access_by_gelato' => [
-		        'name'        => __('WooCommerce Gelato API keys are set and valid.', 'gelato-integration-for-woocommerce'),
-		        'description' => __('Gelato needs access to WooCommerce API. Please try reconnecting if the status is failed.', 'gelato-integration-for-woocommerce'),
+		        'name'        => __('WooCommerce Gelato API keys are set and valid.', GelatoConfig::TEXT_DOMAIN),
+		        'description' => __('Gelato needs access to WooCommerce API. Please try reconnecting if the status is failed.', GelatoConfig::TEXT_DOMAIN),
 		        'method'      => 'test_wc_api_access_by_gelato',
 		        'help'        => false
 	        ],
 	        'test_connection_from_gelato_to_wc' => [
-		        'name'        => __('Check connection with Gelato.', 'gelato-integration-for-woocommerce'),
-		        'description' => __('Verify that API connection between Gelato and WooCommerce site is accessible.', 'gelato-integration-for-woocommerce'),
+		        'name'        => __('Check connection with Gelato.', GelatoConfig::TEXT_DOMAIN),
+		        'description' => __('Verify that API connection between Gelato and WooCommerce site is accessible.', GelatoConfig::TEXT_DOMAIN),
 		        'method'      => 'test_connection_from_gelato_to_wc',
 		        'help'        => false,
 	        ],
 	        'test_uploads_write' => [
-		        'name'        => __('Write permissions', 'gelato-integration-for-woocommerce'),
-		        'description' => __('Verify that you have sufficient access for Gelato to upload mockups. Please contact your website hosting provider if the status is failed.', 'gelato-integration-for-woocommerce'),
+		        'name'        => __('Write permissions', GelatoConfig::TEXT_DOMAIN),
+		        'description' => __('Verify that you have sufficient access for Gelato to upload mockups. Please contact your website hosting provider if the status is failed.', GelatoConfig::TEXT_DOMAIN),
 		        'method'      => 'test_uploads_write',
 		        'help'        => false,
 	        ],
 	        'test_php_memory_limit' => [
-		        'name'        => __('PHP memory limit', 'gelato-integration-for-woocommerce'),
-		        'description' => __('Verify that allocated memory for PHP is at least 128MB. Please contact your website hosting provider if the status is failed.', 'gelato-integration-for-woocommerce'),
+		        'name'        => __('PHP memory limit', GelatoConfig::TEXT_DOMAIN),
+		        'description' => __('Verify that allocated memory for PHP is at least 128MB. Please contact your website hosting provider if the status is failed.', GelatoConfig::TEXT_DOMAIN),
 		        'method'      => 'test_php_memory_limit',
 		        'help'        => false,
 	        ],
 	        'test_php_max_execution_time' => [
-		        'name'        => __('PHP script time limit', 'gelato-integration-for-woocommerce'),
-		        'description' => __('Verify that PHP script execution time limit is set to at least 30 seconds. Please contact your website hosting provider if the status is failed.', 'gelato-integration-for-woocommerce'),
+		        'name'        => __('PHP script time limit', GelatoConfig::TEXT_DOMAIN),
+		        'description' => __('Verify that PHP script execution time limit is set to at least 30 seconds. Please contact your website hosting provider if the status is failed.', GelatoConfig::TEXT_DOMAIN),
 		        'method'      => 'test_php_max_execution_time',
 		        'help'        => false,
 	        ],
 	        'test_ssl' => [
-		        'name'        => __('Check SSL', 'gelato-integration-for-woocommerce'),
-		        'description' => __('Verify that SSL is setup and working correctly.', 'gelato-integration-for-woocommerce'),
+		        'name'        => __('Check SSL', GelatoConfig::TEXT_DOMAIN),
+		        'description' => __('Verify that SSL is setup and working correctly.', GelatoConfig::TEXT_DOMAIN),
 		        'method'      => 'test_ssl',
 		        'help'        => [
 			        'link' => 'https://woocommerce.com/document/ssl-and-https/',
@@ -77,8 +77,8 @@ class GelatoStatusChecker
 		        ]
 	        ],
 	        'test_redirection' => [
-		        'name'        => __('Check site redirection.', 'gelato-integration-for-woocommerce'),
-		        'description' => __('If your site is configured with redirection to another URL, there might be some issues. Usually, this happens with incorrect HTTP to HTTPS redirects or yourdomain.com to www.yourdomain.com. Please check your settings.', 'gelato-integration-for-woocommerce'),
+		        'name'        => __('Check site redirection.', GelatoConfig::TEXT_DOMAIN),
+		        'description' => __('If your site is configured with redirection to another URL, there might be some issues. Usually, this happens with incorrect HTTP to HTTPS redirects or yourdomain.com to www.yourdomain.com. Please check your settings.', GelatoConfig::TEXT_DOMAIN),
 		        'method'      => 'test_redirection',
 		        'help'        => [
 			        'link' => 'https://apisupport.gelato.com/hc/en-us/articles/360020186039-Getting-Started-with-WooCommerce',
@@ -161,7 +161,7 @@ class GelatoStatusChecker
 
         $count = $wpdb->get_var($wpdb->prepare(
             "SELECT COUNT(*) as webhook_count FROM {$wpdb->prefix}wc_webhooks WHERE name LIKE '%%%s%'",
-            "Gelato |"
+            GelatoConfig::WEBHOOK_PREFIX . ' |'
         ));
 
         if ($count == 6) {
@@ -181,7 +181,7 @@ class GelatoStatusChecker
 
         $key = $wpdb->get_row($wpdb->prepare(
             "SELECT * FROM {$wpdb->prefix}woocommerce_api_keys WHERE description LIKE '%%%s%' ORDER BY last_access LIMIT 1",
-            $wpdb->esc_like("Gelato")
+            $wpdb->esc_like(GelatoConfig::API_KEY_PREFIX)
         ));
 
         if (!empty($key) && $key->permissions == 'read_write') {
@@ -193,9 +193,10 @@ class GelatoStatusChecker
 
     private function test_connection_from_gelato_to_wc()
     {
-        $url = GelatoApiClientFactory::GELATO_HOST . GelatoApiClientFactory::GELATO_API_STATUS_URL;
+        $url = GelatoApiClientFactory::API_HOST . GelatoApiClientFactory::API_STATUS_URL;
         $response = wp_remote_get(
-            $url . "?host=" . get_option('home'),
+            $url . '?host=' . rawurlencode(get_option('home'))
+                . '&appHandle=' . rawurlencode(GelatoConfig::APP_HANDLE),
             [
                 'host' => get_option('home')
             ]

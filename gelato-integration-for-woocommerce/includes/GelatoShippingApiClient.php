@@ -1,4 +1,5 @@
 <?php
+
 if (!defined('ABSPATH')) {
     exit;
 }
@@ -17,14 +18,11 @@ class GelatoShippingApiClient
     public function calculate_gelato_shipping_flat_rates(array $rateRequestDto): array
     {
         $response = wp_remote_post(
-            $this->url . GelatoApiClientFactory::GELATO_API_FLAT_RATE_SHIPPING_URL,
+            $this->url . GelatoApiClientFactory::API_FLAT_RATE_SHIPPING_URL,
             [
                 'timeout' => 60,
-                'headers' => [
-                    'Content-Type' => 'application/json',
-                    'x-wc-webhook-source' => $this->storeDomain
-                ],
-                'body' => isset($rateRequestDto) ? json_encode($rateRequestDto) : "",
+                'headers' => $this->buildHeaders(),
+                'body' => json_encode($rateRequestDto),
             ]
         );
 
@@ -38,14 +36,11 @@ class GelatoShippingApiClient
     public function calculate_gelato_shipping_live_rates(array $rateRequestDto): array
     {
         $response = wp_remote_post(
-            $this->url . GelatoApiClientFactory::GELATO_API_LIVE_RATE_SHIPPING_URL,
+            $this->url . GelatoApiClientFactory::API_LIVE_RATE_SHIPPING_URL,
             [
                 'timeout' => 60,
-                'headers' => [
-                    'Content-Type' => 'application/json',
-                    'x-wc-webhook-source' => $this->storeDomain
-                ],
-                'body' => isset($rateRequestDto) ? json_encode($rateRequestDto) : "",
+                'headers' => $this->buildHeaders(),
+                'body' => json_encode($rateRequestDto),
             ]
         );
 
@@ -54,5 +49,14 @@ class GelatoShippingApiClient
         }
 
         return [];
+    }
+
+    private function buildHeaders(): array
+    {
+        return [
+            'Content-Type' => 'application/json',
+            'x-wc-webhook-source' => $this->storeDomain,
+            'x-gelato-app-handle' => GelatoConfig::APP_HANDLE,
+        ];
     }
 }

@@ -10,7 +10,7 @@ class GelatoShipping extends WC_Shipping_Method
      *
      * @var string
      */
-    public $id = 'gelato_shipping';
+    public $id = GelatoConfig::SHIPPING_METHOD_ID;
 
     /**
      * The title of the method.
@@ -76,14 +76,18 @@ class GelatoShipping extends WC_Shipping_Method
     public function __construct()
     {
         parent::__construct();
+
+        $this->method_title = GelatoConfig::MENU_TITLE . ' Shipping';
+
         $this->init_settings();
 
         $this->gelatoShippingClient = GelatoApiClientFactory::create();
 
         $this->title = $this->settings['title'] ?? $this->method_title;
-        $this->method_description = __(
-            'Calculate shipping rates based on Gelato shipping costs.',
-            'gelato-integration-for-woocommerce'
+        $this->method_description = sprintf(
+            /* translators: %s: brand name */
+            __('Calculate shipping rates based on %s shipping costs.', GelatoConfig::TEXT_DOMAIN),
+            GelatoConfig::MENU_TITLE
         );
         $this->shipping_enabled = $this->settings['enabled'] ?? self::DEFAULT_ENABLED;
         $this->shipping_override = $this->settings['override_defaults'] ?? self::DEFAULT_OVERRIDE;
@@ -103,21 +107,33 @@ class GelatoShipping extends WC_Shipping_Method
     {
         $this->form_fields = [
             'enabled' => [
-                'title' => __('Gelato shipping method', 'gelato-integration-for-woocommerce'),
+                'title' => sprintf(
+                    /* translators: %s: brand name */
+                    __('%s shipping method', GelatoConfig::TEXT_DOMAIN),
+                    GelatoConfig::MENU_TITLE
+                ),
                 'type' => 'checkbox',
-                'label' => __('Enable', 'gelato-integration-for-woocommerce'),
+                'label' => __('Enable', GelatoConfig::TEXT_DOMAIN),
                 'default' => self::DEFAULT_ENABLED,
             ],
             'enable_live_rates' => array(
-                'title' => __('Gelato live shipping rates', 'gelato-integration-for-woocommerce'),
+                'title' => sprintf(
+                    /* translators: %s: brand name */
+                    __('%s live shipping rates', GelatoConfig::TEXT_DOMAIN),
+                    GelatoConfig::MENU_TITLE
+                ),
                 'type' => 'checkbox',
-                'label' => __('Enable', 'gelato-integration-for-woocommerce'),
+                'label' => __('Enable', GelatoConfig::TEXT_DOMAIN),
                 'default' => self::WOO_FALSE,
             ),
             'override_defaults' => array(
-                'title' => __('Woocommerce rates', 'gelato-integration-for-woocommerce'),
+                'title' => __('Woocommerce rates', GelatoConfig::TEXT_DOMAIN),
                 'type' => 'checkbox',
-                'label' => __('Disable standard Woocommerce rates for products fulfilled by Gelato', 'gelato-integration-for-woocommerce'),
+                'label' => sprintf(
+                    /* translators: %s: brand name */
+                    __('Disable standard Woocommerce rates for products fulfilled by %s', GelatoConfig::TEXT_DOMAIN),
+                    GelatoConfig::MENU_TITLE
+                ),
                 'default' => self::DEFAULT_OVERRIDE,
             ),
         ];
@@ -326,6 +342,6 @@ class GelatoShipping extends WC_Shipping_Method
             $this->log = wc_get_logger();
         }
 
-        $this->log->log($level, $message, array('source' => 'gelato'));
+        $this->log->log($level, $message, array('source' => GelatoConfig::APP_HANDLE));
     }
 }

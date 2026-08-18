@@ -1,67 +1,59 @@
 <?php
 
 if (!defined('ABSPATH')) {
-	exit;
+    exit;
 }
 
 class GelatoConnector
 {
-	/** @var string */
-	const GELATO_DASHBOARD_URL = 'https://dashboard.gelato.com';
+    public function getConnectUrl(): string
+    {
+        $params = [
+            'domain' => trailingslashit(get_home_url()),
+            'appHandle' => GelatoConfig::APP_HANDLE,
+        ];
 
-	private const PREFIX = "Gelato";
+        return GelatoConfig::CONNECT_BASE_URL
+            . '/stores/woocommerce/connect?'
+            . http_build_query($params);
+    }
 
-	/**
-	 * @return string
-	 */
-	public function getConnectUrl(): string
-	{
-		return self::GELATO_DASHBOARD_URL . '/stores/woocommerce/connect?domain=' . urlencode(trailingslashit(get_home_url()));
-	}
+    public function getDashboardUrl(): string
+    {
+        return GelatoConfig::DASHBOARD_URL;
+    }
 
-	/**
-	 * @return string
-	 */
-	public function getDashboardUrl(): string
-	{
-		return self::GELATO_DASHBOARD_URL;
-	}
+    public function isConnected(): bool
+    {
+        global $wpdb;
 
-	public function isConnected(): bool
-	{
-		global $wpdb;
+        $key = $wpdb->get_row($wpdb->prepare(
+            "SELECT * FROM {$wpdb->prefix}woocommerce_api_keys WHERE description LIKE '%%%s%' ORDER BY last_access LIMIT 1",
+            $wpdb->esc_like(GelatoConfig::API_KEY_PREFIX)
+        ));
 
-		$key = $wpdb->get_row($wpdb->prepare(
-			"SELECT * FROM {$wpdb->prefix}woocommerce_api_keys WHERE description LIKE '%%%s%' ORDER BY last_access LIMIT 1",
-			$wpdb->esc_like( self::PREFIX )
-		));
+        return !empty($key) && $key->permissions === 'read_write';
+    }
 
-		if (!empty($key) && $key->permissions == 'read_write') {
-			return true;
-		}
+    public function resetConnection()
+    {
+        global $wpdb;
 
-		return false;
-	}
+        $wpdb->query($wpdb->prepare(
+            "DELETE FROM {$wpdb->prefix}woocommerce_api_keys WHERE description LIKE '%%%s%'",
+            $wpdb->esc_like(GelatoConfig::API_KEY_PREFIX)
+        ));
 
-	public function resetConnection(): void
-	{
-		global $wpdb;
+        $webhooks = $wpdb->get_results($wpdb->prepare(
+            "SELECT webhook_id FROM {$wpdb->prefix}wc_webhooks WHERE name LIKE '%%%s%'",
+            $wpdb->esc_like(GelatoConfig::WEBHOOK_PREFIX)
+        ));
 
-		$wpdb->query($wpdb->prepare(
-			"DELETE FROM {$wpdb->prefix}woocommerce_api_keys WHERE description LIKE '%%%s%'",
-			$wpdb->esc_like( self::PREFIX )
-		));
+        foreach ($webhooks as $webhookResult) {
+            $webhook = wc_get_webhook($webhookResult->webhook_id);
+            $webhook->delete(true);
+        }
 
-		$webhooks = $wpdb->get_results($wpdb->prepare(
-			"SELECT webhook_id FROM {$wpdb->prefix}wc_webhooks WHERE name LIKE '%%%s%'",
-			$wpdb->esc_like( self::PREFIX )
-		));
-
-		foreach ($webhooks as $webhookResult) {
-			$webhook = wc_get_webhook( $webhookResult->webhook_id );
-			$webhook->delete(true);
-		}
-
-		WC_Cache_Helper::invalidate_cache_group( 'webhooks' );
-	}
+        WC_Cache_Helper::invalidate_cache_group('webhooks');
+    }
 }

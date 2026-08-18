@@ -69,6 +69,6 @@
     || (isset($status_results['test_connection_from_gelato_to_wc'])
         && $status_results['test_connection_from_gelato_to_wc']['status'] == GelatoStatusChecker::STATUS_FAIL)
 ) {
-    echo sprintf('<br><a href="%s" style="border-radius: 22px; line-height: 1.5; padding: 8px 15px; color:#fff; text-decoration: none;; font-size: 15px; background: #e5468c;border-color: #e5468c;">%s</a>', esc_url('?page=gelato-main-menu&reset_plugin=1'), __('Reset plugin', 'gelato-integration-for-woocommerce'));
+    echo sprintf('<br><a href="%s" style="border-radius: 22px; line-height: 1.5; padding: 8px 15px; color:#fff; text-decoration: none; font-size: 15px; background: #e5468c;border-color: #e5468c;">%s</a>', esc_url('?page=gelato-main-menu&reset_plugin=1'), esc_html__('Reset plugin', 'gelato-integration-for-woocommerce'));
 }
 ?>
