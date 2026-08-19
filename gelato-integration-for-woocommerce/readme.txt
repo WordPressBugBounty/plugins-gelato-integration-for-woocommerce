@@ -7,7 +7,7 @@ Author URI: https://gelato.com/
 Contributors: Gelato AS
 Requires at least: 3.8
 Tested up to: 7.0
-Stable tag: 1.3.2
+Stable tag: 1.3.2.1
 Requires PHP: 7.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -65,6 +65,9 @@ Connecting Gelato with your WooCommerce store is easy:
 2. Gelato shipping page
 
 == Changelog ==
+
+= 1.3.2.1 =
+* Add missing GelatoConfig.php file required by 1.3.2
 
 = 1.0.0 =
 * First release
